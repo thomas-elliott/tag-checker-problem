@@ -1,7 +1,7 @@
 # Tag Checker Tech Exercise
 
 ## Requirements
-It was created with Node v16, so that will at least work
+Will run on node 12.x+
 
 ## How to run
 
