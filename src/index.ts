@@ -35,7 +35,7 @@ function consoleInput(): void {
   })
 }
 
-function parseParagraph(paragraph: string) {
+function parseParagraph(paragraph: string): void {
   const parser = new TagParser()
 
   console.log(parser.parseSentence(paragraph))

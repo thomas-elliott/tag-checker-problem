@@ -69,7 +69,7 @@ export default class TagParser {
     }
   }
 
-  private wrapClosingTag(tag: string | undefined) {
+  private wrapClosingTag(tag: string | undefined): string {
     if (tag === undefined || !this.validTagName(tag)) return '#'
     return `</${tag}>`
   }
