@@ -74,7 +74,7 @@ export default class TagParser {
     return `</${tag}>`
   }
 
-  private validTagName = (tag: string): boolean => {
+  private validTagName(tag: string): boolean {
     return tag.length === 1 && !!tag.match(/[A-Z]/)
   }
 }
