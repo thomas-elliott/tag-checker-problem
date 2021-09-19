@@ -12,6 +12,8 @@ export default class Parser {
     for (let i = 0; i < sentence.length; i++) {
       const currentChar = sentence[i]
 
+      // Switches between states - default, open and closing based on if it detects
+      // if it's in a tag or not.
       this.state(currentChar)
     }
 
@@ -31,6 +33,8 @@ export default class Parser {
     if (char === '<') {
       this.state = this.stateOpenTag
       this.currentTagName = ''
+    } else if (char === '>') {
+      this.errors.push('Unexpected closing tag!')
     }
   }
 
@@ -38,12 +42,11 @@ export default class Parser {
     if (this.currentTagName === '' && char === '/') {
       this.state = this.stateClosingTag
     } else if (char === '>') {
+      // Closing the tag. Either we found a valid tag and we add to the stack, or it's
+      // invalid and we discard it
       if (this.validTagName(this.currentTagName)) {
-        console.log(`Adding valid tag ${this.currentTagName} to stack`)
         this.stack.push(this.currentTagName)
         this.currentTagName = ''
-      } else {
-        console.log(`Discarding invalid tag ${this.currentTagName}`)
       }
       this.state = this.stateDefault
     } else {
@@ -53,16 +56,15 @@ export default class Parser {
 
   private stateClosingTag = (char: string): void => {
     if (char === '>') {
-      if (this.validTagName(this.currentTagName)) {
-        const expectedString = this.stack.pop()
-        if (expectedString !== this.currentTagName) {
-          console.log(`Expected </${expectedString}> found </${this.currentTagName}>`)
-          this.errors.push(
-            `Expected ${this.wrapClosingTag(expectedString)} found ${this.wrapClosingTag(this.currentTagName)}`
-          )
-        }
-        this.currentTagName = ''
+      const expectedString = this.stack.pop()
+
+      if (this.validTagName(this.currentTagName) && expectedString !== this.currentTagName) {
+        this.errors.push(
+          `Expected ${this.wrapClosingTag(expectedString)} found ${this.wrapClosingTag(this.currentTagName)}`
+        )
       }
+
+      this.currentTagName = ''
       this.state = this.stateDefault
     } else {
       this.currentTagName += char
@@ -75,7 +77,6 @@ export default class Parser {
   }
 
   private validTagName = (tag: string): boolean => {
-    console.log(`Valid tag ${tag}: length ${tag.length === 1} and match ${!!tag.match(/[A-Z]/)}`)
     return tag.length === 1 && !!tag.match(/[A-Z]/)
   }
 }
