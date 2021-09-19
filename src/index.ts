@@ -1,3 +1,4 @@
+import Parser from './parser'
 import fs from 'fs'
 import * as ReadLine from 'readline'
 ;(function main(): void {
@@ -35,5 +36,7 @@ function consoleInput(): void {
 }
 
 function parseParagraph(paragraph: string) {
-  console.log(`Parsing ${paragraph}`)
+  const parser = new Parser()
+
+  console.log(parser.parseSentence(paragraph))
 }
