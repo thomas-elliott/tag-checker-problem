@@ -1,0 +1,1 @@
+<B><C> This should be centred and in boldface, but the tags are wrongly nested </B></C>
