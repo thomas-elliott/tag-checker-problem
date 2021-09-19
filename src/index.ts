@@ -1,4 +1,4 @@
-import Parser from './parser'
+import TagParser from './tag-parser'
 import fs from 'fs'
 import * as ReadLine from 'readline'
 ;(function main(): void {
@@ -36,7 +36,7 @@ function consoleInput(): void {
 }
 
 function parseParagraph(paragraph: string) {
-  const parser = new Parser()
+  const parser = new TagParser()
 
   console.log(parser.parseSentence(paragraph))
 }

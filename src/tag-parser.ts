@@ -1,4 +1,4 @@
-export default class Parser {
+export default class TagParser {
   private stack: string[] = []
   private errors: string[] = []
   private currentTagName: string = ''
@@ -33,8 +33,6 @@ export default class Parser {
     if (char === '<') {
       this.state = this.stateOpenTag
       this.currentTagName = ''
-    } else if (char === '>') {
-      this.errors.push('Unexpected closing tag!')
     }
   }
 
